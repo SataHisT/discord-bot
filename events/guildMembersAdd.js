@@ -6,15 +6,18 @@ module.exports = {
     const logChannel = member.guild.channels.cache.find(
       (channel) => channel.name === "moderator-only-logs",
     );
-    if (!logChannel) return;
+      if (!logChannel) {
+          console.error("Log channel not found!");
+          return;
+      }
 
     const embed = new EmbedBuilder()
-      .setColor("#00FF00") // Цвет зеленый для новых участников
-      .setTitle("Новый участник присоединился")
-      .addFields(
-        { name: "Участник", value: member.user.tag, inline: true },
-        { name: "ID", value: member.id, inline: true },
-      )
+      .setColor("#cfff00")
+      .setAuthor({
+          name: member.author.tag,
+          iconURL: member.author.displayAvatarURL(),
+        })
+      .setTitle("Присоединился новый участник")
       .setFooter({ text: `Присоединился: ${new Date().toLocaleString()}` })
       .setTimestamp();
 
