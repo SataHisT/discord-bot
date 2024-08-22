@@ -2,7 +2,17 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "messageDelete",
-  execute(message) {
+  async execute(message) {
+    if (message.partial) {
+      try {
+        // Если сообщение частичное, загрузить полное сообщение
+        await message.fetch();
+      } catch (error) {
+        console.error("Ошибка при загрузке сообщения:", error);
+        return;
+      }
+    }
+
     const logChannel = message.guild.channels.cache.find(
       (channel) => channel.name === "moderator-only-logs",
     );

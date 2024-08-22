@@ -3,6 +3,8 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
   name: "roleUpdate",
   execute(oldRole, newRole) {
+    console.log('Role updated:', oldRole.name, '->', newRole.name);
+
     const logChannel = oldRole.guild.channels.cache.find(
         (channel) => channel.name === "moderator-only-logs"
     );
