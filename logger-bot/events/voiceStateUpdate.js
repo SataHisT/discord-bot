@@ -29,9 +29,6 @@ module.exports = {
                     iconURL: oldState.member.user.displayAvatarURL(),
                 })
                 .setTitle(`Отключается от ${oldState.channel.name}`)
-                .addFields(
-                    { name: 'Channel', value: oldState.channel.name }
-                )
                 .setFooter({ text: `ID: ${oldState.id}` })
                 .setTimestamp();
 
