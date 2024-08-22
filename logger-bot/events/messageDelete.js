@@ -1,41 +1,45 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-  name: "messageDelete",
+  name: 'messageDelete',
   async execute(message) {
     if (message.partial) {
       try {
-        // Если сообщение частичное, загрузить полное сообщение
         await message.fetch();
       } catch (error) {
-        console.error("Ошибка при загрузке сообщения:", error);
+        console.error('Ошибка при загрузке сообщения:', error);
         return;
       }
     }
 
+    // Поиск лог-канала в кэше
     const logChannel = message.guild.channels.cache.find(
-      (channel) => channel.name === "moderator-only-logs",
+        (channel) => channel.name === 'moderator-only-logs'
     );
 
     if (!logChannel) {
-      console.error("Log channel not found!");
+      console.error('Лог-канал не найден!');
       return;
     }
 
+    // Создание встраиваемого сообщения
     const embed = new EmbedBuilder()
-      .setColor("#FF0000") // Цвет красный для удаления
-      .setTitle(`Сообщение удалено из ${message.channel.name}`)
-      .setAuthor({
-        name: message.author.tag,
-        iconURL: message.author.displayAvatarURL(),
-      })
-      .addFields({ name: "Удалено:", value: message.content || "[Empty]" })
-      .setFooter({ text: `ID: ${message.id}` })
-      .setTimestamp();
+        .setColor('#FF0000') // Цвет красный для удаления
+        .setTitle(`Сообщение удалено из ${message.channel.name}`)
+        .setAuthor({
+          name: message.author.tag,
+          iconURL: message.author.displayAvatarURL(),
+        })
+        .addFields({ name: 'Удалено:', value: message.content || '[Empty]' })
+        .setFooter({ text: `ID: ${message.id}` })
+        .setTimestamp();
 
-    logChannel
-      .send({ embeds: [embed] })
-      .then(() => console.log("Message sent successfully."))
-      .catch((error) => console.error("Error sending message:", error));
+    // Отправка сообщения в лог-канал с улучшенной обработкой ошибок
+    try {
+      await logChannel.send({ embeds: [embed] });
+      console.log('Сообщение отправлено успешно.');
+    } catch (error) {
+      console.error('Ошибка при отправке сообщения:', error);
+    }
   },
 };
