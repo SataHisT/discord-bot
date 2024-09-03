@@ -1,7 +1,8 @@
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
-const config = require("./config/config.json");
+require('dotenv').config(); // Загрузка переменных из .env
 
+// Создание и запуск бота
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -16,8 +17,8 @@ client.commands = new Collection();
 
 // Загрузка команд
 const commandFiles = fs
-  .readdirSync("./commands")
-  .filter((file) => file.endsWith(".js"));
+    .readdirSync("./commands")
+    .filter((file) => file.endsWith(".js"));
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   client.commands.set(command.data.name, command);
@@ -25,8 +26,8 @@ for (const file of commandFiles) {
 
 // Загрузка событий
 const eventFiles = fs
-  .readdirSync("./events")
-  .filter((file) => file.endsWith(".js"));
+    .readdirSync("./events")
+    .filter((file) => file.endsWith(".js"));
 for (const file of eventFiles) {
   const event = require(`./events/${file}`);
   client.on(event.name, (...args) => event.execute(...args, client));
@@ -59,4 +60,5 @@ client.once("ready", () => {
   console.log("------------------------------------------");
 });
 
-client.login(config.token);
+// Вход в систему с использованием токена из .env файла
+client.login(process.env.BOT_TOKEN);
