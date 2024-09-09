@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = {
 	name: 'guildMemberAdd',
 	async execute(member) {
-		const logChannel = member.guild.channels.cache.find((channel) => channel.name === 'moderator-only-logs')
+		const logChannel = member.guild.channels.cache.find((channel) => channel.name === 'join-or-left-logger')
 
 		if (!logChannel) {
 			console.error('Log channel not found!')
