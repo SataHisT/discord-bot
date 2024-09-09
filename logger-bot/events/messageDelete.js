@@ -12,7 +12,6 @@ module.exports = {
 			}
 		}
 
-		// Поиск лог-канала в кэше
 		const logChannel = message.guild.channels.cache.find((channel) => channel.name === 'message-logger')
 
 		if (!logChannel) {
@@ -20,9 +19,8 @@ module.exports = {
 			return
 		}
 
-		// Ищем последнее действие по удалению сообщения в журналах аудита
-		let executor = 'Неизвестно' // По умолчанию
-		let executorAvatar = null // По умолчанию
+		let executor = 'Неизвестно'
+		let executorAvatar = null
 
 		try {
 			const fetchedLogs = await message.guild.fetchAuditLogs({
@@ -35,12 +33,9 @@ module.exports = {
 			if (deletionLog) {
 				const { executor: mod, target } = deletionLog
 
-				// Проверка, что удаленное сообщение принадлежит пользователю
-				// Поскольку target — это пользователь, а не сообщение,
-				// надо проверить соответствие удаленного сообщения пользователю
 				if (target.id === message.author.id) {
 					executor = mod.tag
-					executorAvatar = mod.displayAvatarURL() // Получаем URL аватара пользователя
+					executorAvatar = mod.displayAvatarURL()
 				}
 			}
 		} catch (error) {
