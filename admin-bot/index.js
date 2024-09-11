@@ -1,6 +1,7 @@
 const { Client, Collection, GatewayIntentBits } = require('discord.js')
 const fs = require('fs')
-require('dotenv').config() // Загрузка переменных из .env
+require('dotenv').config()
+const { google } = require('googleapis')
 
 // Создание и запуск бота
 const client = new Client({
