@@ -1,0 +1,16 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres:14.5
+    restart: always
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432
+  cache:
+    image: redis:7.0.10-alpine
+    restart: always
+    ports:
+      - 6379:6379
+    command: redis-server --loglevel warning --requirepass examplepassword
