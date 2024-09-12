@@ -4,7 +4,19 @@ require('dotenv').config()
 
 const token = process.env.BOT_TOKEN
 const clientId = process.env.BOT_CLIENT_ID
-const guildId = process.env.BOT_GUILD_ID
+
+// Чтение ID сервера из файла guilds.json
+const guildsPath = './guilds.json'
+let guildId = null
+
+if (fs.existsSync(guildsPath)) {
+	const guilds = JSON.parse(fs.readFileSync(guildsPath, 'utf8'))
+	// Используйте первый ID из списка, если их несколько
+	guildId = guilds.length > 0 ? guilds[0] : null
+} else {
+	console.error(`Файл ${guildsPath} не найден.`)
+	process.exit(1)
+}
 
 if (!token || !clientId || !guildId) {
 	console.error('Отсутствуют переменные окружения. Убедитесь, что BOT_TOKEN, BOT_CLIENT_ID и BOT_GUILD_ID установлены.')
