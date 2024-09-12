@@ -7,7 +7,7 @@ module.exports = {
 		const logChannel = member.guild.channels.cache.find((channel) => channel.name === 'join-or-left-logger')
 
 		if (!logChannel) {
-			console.error('Log channel not found!')
+			console.error('Канал для логгирования не найден!')
 			return
 		}
 
@@ -28,9 +28,9 @@ module.exports = {
 
 		try {
 			await logChannel.send({ embeds: [embed] })
-			console.log('Member leave log sent successfully.')
+			console.log('Лог об уходе участника с сервера был успешно отправлен.')
 		} catch (error) {
-			console.error('Error sending member leave log:', error)
+			console.error('Ошибка в отправке лога участника покинувшего сервре:', error)
 		}
 	}
 }

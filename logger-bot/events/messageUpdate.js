@@ -54,9 +54,9 @@ module.exports = {
 
 		try {
 			await logChannel.send({ embeds: [embed] })
-			console.log('Message update log sent successfully.')
+			console.log('лог изменения сообщения успешно отправлен.')
 		} catch (error) {
-			console.error('Error sending message update log:', error)
+			console.error('Произошла ошибка в отправке лога изменения сообщения:', error)
 		}
 	}
 }

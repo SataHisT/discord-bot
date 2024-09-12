@@ -23,9 +23,9 @@ module.exports = {
 
 		try {
 			await logChannel.send({ embeds: [embed] })
-			console.log('New member join log sent successfully.')
+			console.log('Присоединился новый пользователь, лог успешно доставлен.')
 		} catch (error) {
-			console.error('Error sending new member join log:', error)
+			console.error('Ошибка в отправке лога присоединения нового пользователя:', error)
 		}
 	}
 }

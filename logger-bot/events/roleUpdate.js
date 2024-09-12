@@ -3,32 +3,32 @@ const { EmbedBuilder } = require('discord.js')
 module.exports = {
 	name: 'roleUpdate',
 	async execute(oldRole, newRole) {
-		console.log('Role updated:', oldRole.name, '->', newRole.name)
+		console.log('Роль обновлена:', oldRole.name, '->', newRole.name)
 
 		// Найти лог-канал
 		const logChannel = newRole.guild.channels.cache.find((channel) => channel.name === 'moderator-only-logs')
 
 		if (!logChannel) {
-			console.error('Log channel not found!')
+			console.error('Лог-канал не найден!')
 			return
 		}
 
 		const embed = new EmbedBuilder()
 			.setColor('#c6b41e')
-			.setTitle('Role Updated')
+			.setTitle('Обновление роли!')
 			.addFields(
-				{ name: 'Old Role', value: oldRole.name, inline: true },
-				{ name: 'New Role', value: newRole.name, inline: true },
+				{ name: 'Старая роль', value: oldRole.name, inline: true },
+				{ name: 'Новая роль', value: newRole.name, inline: true },
 				{ name: 'ID', value: newRole.id, inline: true }
 			)
-			.setFooter({ text: `Updated at: ${new Date().toLocaleString()}` })
+			.setFooter({ text: `Обновлено в: ${new Date().toLocaleString()}` })
 			.setTimestamp()
 
 		try {
 			await logChannel.send({ embeds: [embed] })
-			console.log('Role update log sent successfully.')
+			console.log('Обновление роли прошло успешно.')
 		} catch (error) {
-			console.error('Error sending role update log:', error)
+			console.error('Ошибка в изменении роли:', error)
 		}
 	}
 }

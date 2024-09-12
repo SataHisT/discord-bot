@@ -44,8 +44,8 @@ module.exports = {
 		if (embed) {
 			logChannel
 				.send({ embeds: [embed] })
-				.then(() => console.log('Voice state change logged successfully.'))
-				.catch((error) => console.error('Error logging voice state change:', error))
+				.then(() => console.log('Статус голосового канала был успешно изменен.'))
+				.catch((error) => console.error('Ошибка загрузки статуса голосового канала:', error))
 		}
 	}
 }
