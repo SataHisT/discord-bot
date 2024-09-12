@@ -19,12 +19,10 @@ client.commands = new Collection()
 const commandFiles = fs.readdirSync('./commands').filter((file) => file.endsWith('.js'))
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`)
-
 	if (!command.data || !command.data.name) {
 		console.error(`Команда ${file} не содержит свойство data.name.`)
 		continue
 	}
-
 	client.commands.set(command.data.name, command)
 }
 
@@ -38,10 +36,8 @@ for (const file of eventFiles) {
 // Обработка Slash-команд
 client.on('interactionCreate', async (interaction) => {
 	if (!interaction.isCommand()) return
-
 	const command = client.commands.get(interaction.commandName)
 	if (!command) return
-
 	try {
 		await command.execute(interaction)
 	} catch (error) {
@@ -50,6 +46,22 @@ client.on('interactionCreate', async (interaction) => {
 			content: 'Произошла ошибка при выполнении команды!',
 			ephemeral: true
 		})
+	}
+})
+
+client.on('guildCreate', async (guild) => {
+	console.log(`Бот добавлен на новый сервер: ${guild.name} (ID: ${guild.id})`)
+
+	const path = './guilds.json'
+	let guilds = []
+	if (fs.existsSync(path)) {
+		guilds = JSON.parse(fs.readFileSync(path, 'utf8'))
+	}
+
+	if (!guilds.includes(guild.id)) {
+		guilds.push(guild.id)
+		fs.writeFileSync(path, JSON.stringify(guilds, null, 2))
+		console.log(`ID сервера ${guild.id} сохранён в guilds.json`)
 	}
 })
 
